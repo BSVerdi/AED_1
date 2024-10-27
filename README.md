@@ -1,1 +1,1 @@
-Algoritmo e Estrutura de Dados 1, UNIFESP-2024, Prof. Arlindo
+Algoritmo e Estrutura de Dados 1, UNIFESP-2024, Prof. Dr. Arlindo
