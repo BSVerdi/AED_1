@@ -65,12 +65,11 @@ int main() {
                 scanf("%d", &matriz[i][j]);
         }
 
-        printf("INSTANCIA %d\n", c);
+        printf("Instancia %d\n", c);
         if (verificar(matriz))
-            printf("SIM\n");
+            printf("SIM\n\n");
         else 
-            printf("NAO\n");
-        printf("\n");
+            printf("NAO\n\n");
     }
     
     return 0;
