@@ -38,7 +38,7 @@ void buscaRemocao(celula *lista, int conteudo) {
 
 void printLista(celula *lista) {
     celula *aux;
-    for (aux = lista->seg; aux->seg != NULL; aux = aux->seg)
+    for (aux = lista->seg; aux != NULL; aux = aux->seg)
         printf("%d ", aux->conteudo); 
 }
 

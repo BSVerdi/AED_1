@@ -16,7 +16,7 @@ void acharDiamantes(char *string) {
         }
     }
 
-    printf("%d\n", diamantes);    
+    printf("%d\n", diamantes);
 }
 
 
