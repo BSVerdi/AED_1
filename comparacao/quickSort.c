@@ -52,7 +52,7 @@ int main() {
         quicksort(array, 0, size - 1);
         tempo = clock() - tempo;
 
-        printf("size = %d, tempo = %.6lf ms\n", size, ((double)tempo)/((CLOCKS_PER_SEC/1000)));
+        printf("%.0lf\n", ((double)tempo)/((CLOCKS_PER_SEC/1000)));
 
         free(array);
 
