@@ -56,7 +56,7 @@ int main() {
             array[j] = rand() % size;
 
         tempo = clock();
-        mergeSort(array, 0, size - 1);
+        mergeSort(array, 0, size);
         tempo = clock() - tempo;
 
         printf("%.0lf\n", ((double)tempo)/((CLOCKS_PER_SEC/1000)));
