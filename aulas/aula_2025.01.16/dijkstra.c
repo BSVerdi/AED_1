@@ -53,11 +53,11 @@ void dijkstra(int grafo[VERTICES][VERTICES], int origem) {
 int main() {
     // representçao do grafo como matriz de adjacencia
     int grafo[5][5] = {
-        {0, 10, 5, 0, 0},
-        {0, 0, 2, 1, 0},
-        {0, 3, 0, 9, 2},
-        {0, 0, 0, 0, 4},
-        {7, 0, 0, 6, 0},
+        {0, 10, 5, 0, 0}, // 0
+        {0, 0, 2, 1, 0}, //  1
+        {0, 3, 0, 9, 2}, //  2
+        {0, 0, 0, 0, 4}, //  3
+        {7, 0, 0, 6, 0}, //  4
     };
 
     dijkstra(grafo, 0);
