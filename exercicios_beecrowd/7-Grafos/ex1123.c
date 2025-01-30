@@ -3,12 +3,11 @@
 #include<limits.h>
 
 
-int menorDistancia(int dist[], int processado[], int cidades) {
-    int min = INT_MAX, minIndex;
+int menorDistancia(int dist[], int visitado[], int cidades) {
+    int minIndex = -1;
 
     for (int v = 0; v < cidades; v++) {
-        if (!processado[v] && dist[v] <= min) {
-            min = dist[v];
+        if (!visitado[v] && (minIndex == -1 || dist[v] < dist[minIndex])) {
             minIndex = v;
         }
     }
@@ -18,29 +17,31 @@ int menorDistancia(int dist[], int processado[], int cidades) {
 
 
 void dijkstra(int **grafo, int origem, int cidades, int cidades_na_rota) {
-    int dist[cidades];
-    int processado[cidades];
-    int valido = 1;
+    int distancia[cidades];
+    int visitado[cidades];
 
     // inicializa 
     for (int i = 0; i < cidades; i++) {
-        dist[i] = INT_MAX;
-        processado[i] = 0;
+        distancia[i] = INT_MAX;
+        visitado[i] = 0;
     }
 
-    dist[origem] = 0;
+    distancia[origem] = 0;
 
     // processa todos os vertices
     for (int c = 0; c < (cidades - 1); c++) {
         // escolhe o no com a menor distancia
-        int u = menorDistancia(dist, processado, cidades);
+        int u = menorDistancia(distancia, visitado, cidades);
 
-        processado[u] = 1; //marca o no como processado;
+        if (distancia[u] == INT_MAX) break;
+        visitado[u] = 1; //marca o no como visitado;
 
         // atualiza a distancia dos nos adjacentes
         for (int v = 0; v < cidades; v++) {
-            if (!processado[v] && grafo[u][v] && dist[u] != INT_MAX && dist[u] + grafo[u][v] < dist[v]) {
-                dist[v] = dist[u] + grafo[u][v];
+            if (u >= cidades_na_rota || (v >= cidades_na_rota && grafo[u][v]) || v == u + 1) {
+                if (!visitado[v] && distancia[u] + grafo[u][v] < distancia[v]) {
+                    distancia[v] = distancia[u] + grafo[u][v];
+                }
             }
         }
     } 
@@ -48,7 +49,7 @@ void dijkstra(int **grafo, int origem, int cidades, int cidades_na_rota) {
     // exibe as distancias
     printf("Vertices \t Distancia da origem\n");
     for (int i = 0; i < cidades; i++)
-        printf("%d \t\t %d \n", i, dist[i]);
+        printf("%d \t\t %d \n", i, distancia[i]);
 }
 
 
