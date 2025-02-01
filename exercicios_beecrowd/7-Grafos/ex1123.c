@@ -3,19 +3,6 @@
 #include<limits.h>
 
 
-int menorDistancia(int dist[], int visitado[], int cidades) {
-    int minIndex = -1;
-
-    for (int v = 0; v < cidades; v++) {
-        if (!visitado[v] && (minIndex == -1 || dist[v] < dist[minIndex])) {
-            minIndex = v;
-        }
-    }
-
-    return minIndex;
-}
-
-
 void dijkstra(int **grafo, int origem, int cidades, int cidades_na_rota) {
     int distancia[cidades];
     int visitado[cidades];
@@ -29,56 +16,69 @@ void dijkstra(int **grafo, int origem, int cidades, int cidades_na_rota) {
     distancia[origem] = 0;
 
     // processa todos os vertices
-    for (int c = 0; c < (cidades - 1); c++) {
+    for (int i = 0; i < cidades; i++) {
         // escolhe o no com a menor distancia
-        int u = menorDistancia(distancia, visitado, cidades);
+        int u = -1;
+        for (int j = 0; j < cidades; j++) {
+            if (!visitado[j] && (u == -1 || distancia[j] < distancia[u]))
+                u = j;
+        }
 
-        if (distancia[u] == INT_MAX) break;
+        if (u == -1 || distancia[u] == INT_MAX) break;
         visitado[u] = 1; //marca o no como visitado;
 
         // atualiza a distancia dos nos adjacentes
         for (int v = 0; v < cidades; v++) {
-            if (u >= cidades_na_rota || (v >= cidades_na_rota && grafo[u][v]) || v == u + 1) {
-                if (!visitado[v] && distancia[u] + grafo[u][v] < distancia[v]) {
-                    distancia[v] = distancia[u] + grafo[u][v];
+            if (grafo[u][v] > 0) {
+                if (u >= cidades_na_rota || v >= cidades_na_rota || v == u + 1) {
+                    if (distancia[u] + grafo[u][v] < distancia[v]) {
+                        distancia[v] = distancia[u] + grafo[u][v];
+                    }
                 }
             }
         }
     } 
 
-    // exibe as distancias
-    printf("Vertices \t Distancia da origem\n");
-    for (int i = 0; i < cidades; i++)
-        printf("%d \t\t %d \n", i, distancia[i]);
+    // exibe as distancia
+    printf("%d\n", distancia[cidades_na_rota - 1]);
 }
 
 
 int main() {
-    int **grafo, cidades, estradas, cidades_na_rota, conserto, i, j;
+    int **grafo, cidades = 1, estradas = 1, cidades_na_rota = 1, conserto = 1, i, j;
     
-    // quantidade de cidades e estradas
-    scanf("%d %d %d %d", &cidades, &estradas, &cidades_na_rota, &conserto);
 
-    grafo = (char**)malloc(sizeof(char*) * cidades);
-    for (i=0; i<cidades; i++)
-        grafo[i] = (char*)malloc(sizeof(char) * cidades);
+    while (1) {
+        // quantidade de cidades e estradas
+        scanf("%d %d %d %d", &cidades, &estradas, &cidades_na_rota, &conserto);
 
-    for (i=0; i<cidades; i++) {
-        for(j=0; j<cidades; j++)
-            grafo[i][j] = 0;
+        if (!(cidades || estradas || cidades_na_rota || conserto)) break;    
+
+        grafo = (int**)malloc(sizeof(int*) * cidades);
+        for (i=0; i<cidades; i++)
+            grafo[i] = (int*)malloc(sizeof(int) * cidades);
+
+        for (i=0; i<cidades; i++) {
+            for(j=0; j<cidades; j++)
+                grafo[i][j] = 0;
+        }
+
+        for (int k = 0; k < estradas; k++) {
+            int temp;
+
+            scanf("%d %d",&i, &j);
+            scanf("%d", &temp);
+
+            grafo[i][j] = temp;
+            grafo[j][i] = temp;
+        }
+
+        dijkstra(grafo, conserto, cidades, cidades_na_rota);
+        
+        for (i = 0; i < cidades; i++)
+            free(grafo[i]);
+        free(grafo);
     }
-
-    for (int k = 0; k < estradas; k++) {
-        int temp;
-
-        scanf("%d %d",&i, &j);
-        scanf("%d", &temp);
-
-        grafo[i][j] = temp;
-        grafo[j][i] = temp;
-    }
-
-    dijkstra(grafo, 0, cidades, cidades_na_rota);
 
     return 0;
 }
