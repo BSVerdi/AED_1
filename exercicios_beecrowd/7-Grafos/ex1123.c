@@ -40,7 +40,10 @@ void dijkstra(int **grafo, int origem, int cidades, int cidades_na_rota) {
     } 
 
     // exibe as distancia
-    printf("%d\n", distancia[cidades_na_rota - 1]);
+    if (cidades_na_rota == 0)
+        printf("%d\n", distancia[cidades_na_rota]);
+    else
+        printf("%d\n", distancia[cidades_na_rota - 1]);
 }
 
 
