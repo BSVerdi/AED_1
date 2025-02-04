@@ -51,15 +51,19 @@ void insertionSort(Array *words, int size) {
 
 
 void printArray(Array *words, int size) {
-    for (int i = 0; i < size; i++)
-        printf("%s ", words[i].string);
+    for (int i = 0; i < size; i++) {
+        printf("%s", words[i].string);
+        if (i < size - 1)
+            printf(" ");
+
+    }
     printf("\n");
 }
 
 
 int main() {
     int cases;
-    char string[60];
+    char string[2500];
     Array words[50];
 
     scanf("%d", &cases);
