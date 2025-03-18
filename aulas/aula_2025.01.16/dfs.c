@@ -33,7 +33,6 @@ int main() {
         scanf("%d %d", &origem, &destino);
 
         grafo[origem][destino] = 1;
-        grafo[destino][origem] = 1;
     }
 
     printf("Ordem da busca em profundidade:");
